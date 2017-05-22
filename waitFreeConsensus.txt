@@ -1,0 +1,40 @@
+One  of the  critical aspects  of  any implementation  of total  order
+broadcast  (TOB) is  its treatment  of  concurrency because  it has  a
+significant  influence in  its  performance. TOBs  have  to deal  with
+several concurrent events: reception/transmission of messages (network
+events),  protocol events  (treatment  of the  various control  events
+necessary  to implement  the  chosen TOB  algorithm,  usually a  multi
+consensus  algorithm),  and  persistence events  (TOBs  require  their
+critical to  be stored in  stable storage).  The processing  flow that
+organizes  all   these  asynchronous  concurrent  events   is  usually
+implemented  using  multiple  asynchronous  processes  (threads)  that
+access  shared data  structures.  Unfortunately,  if the  threads that
+access (read-write) the shared state do not follow a strict discipline
+they  can produce  state  that is  inconsistent,  incorrect. To  avoid
+inconsistent states  in the  presence of concurrency,  threads usually
+coordinate their access using a synchronization mechanism. The primary
+synchronization mechanism used by  programming languages and operating
+systems  is exclusive  locking (busy  waiting, conditional  waiting or
+critical sections).  Unfortunately,  any locking-based synchronization
+mechanism can lead  to arbitrary delays of any number  of threads used
+to implement the TOB, a very  undesirable effect. To try to circumvent
+the problems  associated with traditional  synchronization primitives,
+Lamport~\cite{lamport77b}   introduced   the  first   algorithms   for
+concurrent reading and writing without the  use of locks. The idea was
+later   developed   into   a   body   of   mechanisms   that   support
+wait-freedom~\cite{herlihy91}. Wait-freedom guarantees that any thread
+that access a shared concurrent  object will complete its operation in
+a finite number of steps, regardless  the execution speed of the other
+processes. This  means that a thred  terminates in a finite  number of
+steps, even  if the other threads  are very slow or  stop taking steps
+completely. Wait-freedom is a very  desirable property when one has to
+cope with threads  that encouter unexptected delays; this  is the case
+of  most  implementations of  consensus-based  TOBs.   So, during  our
+research   we  are   going   to   transform  a   synchronization-based
+impelementation  of  Treplica~\cite{buzato09}   into  an  functionally
+equivalent   wait-free   Treplica.   The  performance   of   the   two
+implementations are going to be  compared using a benchmark (TPC-W) to
+assess the contribution  of wait-freedom to the  performance of active
+replication.
+
+
