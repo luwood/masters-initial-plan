@@ -58,7 +58,17 @@ Resumo
 % Modifique as seções de acordo com o seu projeto
 
 \section{Introdução}
-A replicação é um dos tópicos mais estudados na área de sistemas distribuídos\cite{schneider1990}.
+A replicação é um dos tópicos mais estudados na área de sistemas distribuídos. 
+De modo geral o mecanismo é utilizado para prover tolerância a falhas ou melhorar a performance.
+
+O termo \textit{state machine approach}\cite{lamport1978,lamport1984} é utilizado para designar métodos que utilizam a replicação para prover serviços tolerantes a falhas. A ideia fundamental por trás do conceito é simples: dado um conjunto de máquinas de estado que inicialmente se encontram em situações semelhantes, se um conjunto de comandos determinísticos for executado na mesma ordem em cada uma, então o estado final será o mesmo em todas\cite{schneider1990}. Deste modo, todas as instâncias de um serviço estarão replicadas consistentemente. 
+
+Considerando que no âmbito de sistemas distribuídos a entrega dos comandos se dá por troca de mensagens, o desafio encontra-se então em garantir uma ordem global de recebimento das mesmas. A esta classe de algoritmos da-se o nome \textit{Total order broadcast}(TOB) ou \textit{Atomic broadcast}(ABCAST). 
+
+Existem diversas implementações para o TOB \cite{schiper2004}. 
+Algumas exploram a relação de equivalência ao problema de \textit{Consenso}\cite{chandra1996} e utilizam algoritmos como Paxos\cite{lamport1998} na solução.
+Em linhas gerais o \textit{Consenso} se resume a garantir que processos cheguem a uma decisão comum e única, inclusive na presença de falhas.  
+
 
 \section{Trabalho Proposto}
 
