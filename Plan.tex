@@ -76,10 +76,21 @@ Treplica\cite{vieira2008} é uma ferramenta projetada para replicação ubíqua (tra
 
 \section{Trabalho Proposto}
 
-Um dos aspectos criticos para a desempenho de qualquer implementação de \textit{TOB} é o tratamento de concorrência. \textit{TOBs} precisam lidar com diversos eventos concorrentes: recepção/transmissão de mensagens, eventos de controle e persistência de dados. 
-Normalmente, a arquitetura que organiza todo este fluxo de eventos assíncronos é baseada em múltiplos processos ou \textit{threads} que compartilham estruturas de dados. Invariavelmente o acesso aos recursos compartilhados não pode ser realizado sem algum método de controle, visto que isso produziria um estado inconsistente. Mecanismos de sincronização são a principal forma de coordenação empregada nestes cenários. 
-As primitivas básicas de sincronização em qualquer linguagem ou sistema operacional se baseiam em \textit{exclusive locking}: \textit{busy waiting, conditional waiting} ou \textit{critical sections}.
-Infelizmente, \textit{locks} podem gerar atrasos arbitrários em qualquer uma das partes participantes. 
+Um dos aspectos  criticos para a desempenho  de qualquer implementação
+de \textit{TOB} é o tratamento de concorrência. \textit{TOBs} precisam
+lidar  com  diversos  eventos  concorrentes:  recepção/transmissão  de
+mensagens, eventos de controle  e persistência de dados.  Normalmente,
+a arquitetura  que organiza todo  este fluxo de eventos  assíncronos é
+baseada em  múltiplos processos  ou \textit{threads}  que compartilham
+estruturas   de  dados.   Invariavelmente   o   acesso  aos   recursos
+compartilhados não  pode ser realizado  sem algum método  de controle,
+visto  que  isso produziria  um  estado  inconsistente. Mecanismos  de
+sincronização são  a principal  forma de coordenação  empregada nestes
+cenários.   As   primitivas  básicas  de  sincronização   em  qualquer
+linguagem  ou  sistema  operacional se  baseiam  em  \textit{exclusive
+  locking}:    \textit{busy   waiting,    conditional   waiting}    ou
+\textit{critical sections}.  Infelizmente,  \textit{locks} podem gerar
+atrasos arbitrários em qualquer uma das partes participantes.
 
 Para  procurar  resolver o  problema  de  primitivas de  sincronização
 tradicionais,   Lamport~\cite{lamport77b}   introduziu  os   primeiros
