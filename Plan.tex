@@ -46,14 +46,14 @@
 %%*****************************************************************************
 % Resumo do trabalho
 \begin{abstract}
-Transformar uma implementação da ferramenta Treplica baseada em sincronia de Treplica no equivalente te um wait-free Treplica. A performance da implementação será comparada utilizando um benchmark para avaliar a contribuição de wait-freedom com a performance de replicação ativa. 
+Este plano de pesquisa discorre sobre a proposta de otimização da ferramenta Treplica através da substituição de mecanismos de sincronização tradicionais por outros \textit{wait-free}. O objetivo final é comparar a performance das duas implementações e mensurar o impacto da mudança para o desempenho final da replicação ativa.
 
 \end{abstract}
 
 % Indique três palavras-chave que descrevem o trabalho
-\begin{IEEEkeywords}
- Palavras-chave
-\end{IEEEkeywords}
+%\begin{IEEEkeywords}
+% Palavras-chave
+%\end{IEEEkeywords}
 
 %%*****************************************************************************
 % Modifique as seções de acordo com o seu projeto
@@ -70,25 +70,22 @@ Existem diversas implementações para o TOB \cite{schiper2004}.
 Algumas exploram a relação de equivalência ao problema de \textit{Consenso}\cite{chandra1996} e utilizam algoritmos como Paxos\cite{lamport1998} na solução.
 Em linhas gerais o \textit{Consenso} se resume a garantir que processos cheguem a uma decisão comum e única, inclusive na presença de falhas.  
 
-Treplica\cite{vieira2008} é uma ferramenta projetada para replicação ubíqua (transparente, relisiliente e eficiente) que utiliza uma implementação de \textit{Total order broadcast} baseada em \textit{Consenso} utilizando Paxos e Fast-Paxos\cite{lamport2006}. Este documento apresenta um plano de pesquisa para transformar uma implementação de Treplica baseada em sincronização em uma equivalente \textit{wait-free}.
+Treplica\cite{vieira2008} é uma ferramenta projetada para replicação ubíqua (transparente, relisiliente e eficiente) que utiliza uma implementação de \textit{Total order broadcast} baseada em
+ \textit{Consenso} utilizando Paxos e Fast-Paxos\cite{lamport2006}. Este documento apresenta um plano de pesquisa para transformar uma implementação de Treplica baseada em sincronização em uma equivalente \textit{wait-free}.
 
 
 \section{Trabalho Proposto}
 
 Um dos aspectos criticos para a performance de qualquer implementação de \textit{TOB} é o tratamento de concorrência. \textit{TOBs} precisam lidar com diversos eventos concorrentes: recepção/transmissão de mensagens, eventos de controle e persistência de dados. 
 Normalmente, a arquitetura que organiza todo este fluxo de eventos assíncronos é baseada em múltiplos processos ou \textit{threads} que compartilham estruturas de dados. Invariavelmente o acesso aos recursos compartilhados não pode ser realizado sem algum método de controle, visto que isso produziria um estado inconsistente. Mecanismos de sincronização são a principal forma de coordenação empregada nestes cenários. 
-As primitivas básicas de sincronização em qualquer linguagem ou sistema operacional se baseiam em \textit{exclusive locking}: \textit{busy waiting, conditional waiting or critical sections}.
-Infelizmente,\textit{locks} podem gerar atrasos arbitrários em qualquer uma das partes participantes. 
+As primitivas básicas de sincronização em qualquer linguagem ou sistema operacional se baseiam em \textit{exclusive locking}: \textit{busy waiting, conditional waiting} ou \textit{critical sections}.
+Infelizmente, \textit{locks} podem gerar atrasos arbitrários em qualquer uma das partes participantes. 
 
-Tentando resolver o problema de primitivas de sincronização tradicionais, Lamport introduziu os primeiros algoritmos para leitura e escrita concorrente sem a utilização de \textit{locks}. 
-A ideia foi posteriormente desenvolvida em uma série de mecanismos que suportam wait-freedom. 
+Tentando resolver o problema de primitivas de sincronização tradicionais, Lamport~\cite{lamport77b} introduziu os primeiros algoritmos para leitura e escrita concorrente sem a utilização de \textit{locks}.  
+A ideia foi posteriormente desenvolvida por Herlihy\cite{herlihy1991} em uma série de mecanismos que suportam \textit{wait-freedom}. Uma implementação \textit{wait-free} de um objeto compartilhado garante que qualquer processo pode completar qualquer operação em um número finito de passos, independentemente da velocidade de execução de outros processos. 
+\textit{Wait-freedom} é uma propriedade extremamente desejável quando existe a necessidade de trabalhar com \textit{threads} que podem se deparar com atrasos inesperados; exatamente o caso da maioria das implementações de \textit{TOBs} baseadas em consenso. 
 
-Wait-freedom garante que qualquer thread que acesse um objeto compartilhando vai completar sua operação em um número finito de passos, indepentemente da velocidade de execução do processo. Isso implica que uma thread termina em um número finito de passos, mesmo se outras threads estiverem lentas ou pararam de prosseguir completamente. 
-
-Wait freedom é uma propriedade extremamente desejável quando existe a necessidade de trabalhar com threads que encontrar atrasos inesperados. Exatamente o caso da maioria das implementações de TOBs baseadas em consenso. 
-
-Durante nossa pesquisa nós iremos transformar uma implementação baseada em sincronização de Treplica no equivalente te um wait-free Treplica. A performance da implementação será comparada utilizando um benchmark para avaliar a contribuição de wait-freedom com a performance de replicação ativa. 
-
+Durante nossa pesquisa nós iremos transformar uma implementação baseada em sincronização de Treplica no equivalente de um \textit{wait-free} Treplica. A performance das duas implementações será comparada utilizando um benchmark (TPC-W) para avaliar a contribuição de \textit{wait-freedom} no desempenho da replicação ativa. 
 
  
 
